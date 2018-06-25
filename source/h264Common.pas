@@ -12,7 +12,7 @@
 
 unit h264Common;
 
-{$I ..\zDefine.inc}
+{$I zDefine.inc}
 {$POINTERMATH ON}
 
 interface

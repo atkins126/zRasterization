@@ -13,7 +13,7 @@
 { ****************************************************************************** }
 unit zDrawEngineSoftY4M;
 
-{$I ..\zDefine.inc}
+{$I zDefine.inc}
 
 interface
 

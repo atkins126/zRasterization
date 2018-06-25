@@ -22,7 +22,7 @@
 }
 unit JLSBitIO;
 
-{$I ..\zDefine.inc}
+{$I zDefine.inc}
 
 interface
 

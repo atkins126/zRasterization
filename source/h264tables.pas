@@ -12,7 +12,7 @@
 
 unit h264tables;
 
-{$I ..\zDefine.inc}
+{$I zDefine.inc}
 
 interface
 

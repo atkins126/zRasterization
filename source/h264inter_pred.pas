@@ -12,7 +12,7 @@
 
 unit h264inter_pred;
 
-{$I ..\zDefine.inc}
+{$I zDefine.inc}
 {$POINTERMATH ON}
 
 interface

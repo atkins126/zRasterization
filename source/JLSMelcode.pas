@@ -22,7 +22,7 @@
 }
 unit JLSMelcode;
 
-{$I ..\zDefine.inc}
+{$I zDefine.inc}
 
 interface
 

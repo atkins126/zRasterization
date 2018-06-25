@@ -12,7 +12,7 @@
 
 unit h264Parameters;
 
-{$I ..\zDefine.inc}
+{$I zDefine.inc}
 
 interface
 

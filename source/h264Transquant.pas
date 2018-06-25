@@ -11,7 +11,7 @@
 { ****************************************************************************** }
 unit h264Transquant;
 
-{$I ..\zDefine.inc}
+{$I zDefine.inc}
 {$POINTERMATH ON}
 
 interface

@@ -11,7 +11,7 @@
 { ****************************************************************************** }
 unit MovementEngine;
 
-{$I ..\zDefine.inc}
+{$I zDefine.inc}
 
 interface
 

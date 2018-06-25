@@ -13,7 +13,7 @@
 { ****************************************************************************** }
 unit MemoryRaster;
 
-{$I ..\zDefine.inc}
+{$I zDefine.inc}
 
 interface
 
@@ -653,7 +653,7 @@ uses
 {$ENDIF}
   CoreCompress, DoStatusIO;
 
-{$I ..\zDefine.inc}
+{$I zDefine.inc}
 
 {$REGION 'InternalDefines'}
 

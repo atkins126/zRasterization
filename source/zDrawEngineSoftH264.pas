@@ -13,7 +13,7 @@
 { ****************************************************************************** }
 unit zDrawEngineSoftH264;
 
-{$I ..\zDefine.inc}
+{$I zDefine.inc}
 
 interface
 

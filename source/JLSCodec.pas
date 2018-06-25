@@ -22,7 +22,7 @@
 }
 unit JLSCodec;
 
-{$I ..\zDefine.inc}
+{$I zDefine.inc}
 
 interface
 

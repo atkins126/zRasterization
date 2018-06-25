@@ -12,7 +12,7 @@
 
 unit h264Intra_pred;
 
-{$I ..\zDefine.inc}
+{$I zDefine.inc}
 
 interface
 

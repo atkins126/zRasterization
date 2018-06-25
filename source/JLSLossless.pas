@@ -22,7 +22,7 @@
 }
 unit JLSLossless;
 
-{$I ..\zDefine.inc}
+{$I zDefine.inc}
 
 interface
 

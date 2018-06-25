@@ -12,7 +12,7 @@
 
 unit h264RateControl;
 
-{$I ..\zDefine.inc}
+{$I zDefine.inc}
 {$POINTERMATH ON}
 
 interface

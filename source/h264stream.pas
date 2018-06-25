@@ -12,7 +12,7 @@
 
 unit h264stream;
 
-{$I ..\zDefine.inc}
+{$I zDefine.inc}
 
 interface
 
