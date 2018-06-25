@@ -192,7 +192,6 @@ uses
   JsonDataObjects in '..\..\source\JsonDataObjects.pas',
   LibraryManager in '..\..\source\LibraryManager.pas',
   ListEngine in '..\..\source\ListEngine.pas',
-  MediaCenter in '..\..\source\MediaCenter.pas',
   MemoryRaster in '..\..\source\MemoryRaster.pas',
   MemoryStream64 in '..\..\source\MemoryStream64.pas',
   MH in '..\..\source\MH.pas',
@@ -219,7 +218,6 @@ uses
   zDrawEngineSoftH264 in '..\..\source\zDrawEngineSoftH264.pas',
   zDrawEngineSoftY4M in '..\..\source\zDrawEngineSoftY4M.pas',
   zExpression in '..\..\source\zExpression.pas',
-  zSound in '..\..\source\zSound.pas',
   MovementEngine in '..\..\source\MovementEngine.pas';
 
 {$R *.res}

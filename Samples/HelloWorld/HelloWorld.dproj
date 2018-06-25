@@ -507,7 +507,6 @@
         <DCCReference Include="..\..\source\JsonDataObjects.pas"/>
         <DCCReference Include="..\..\source\LibraryManager.pas"/>
         <DCCReference Include="..\..\source\ListEngine.pas"/>
-        <DCCReference Include="..\..\source\MediaCenter.pas"/>
         <DCCReference Include="..\..\source\MemoryRaster.pas"/>
         <DCCReference Include="..\..\source\MemoryStream64.pas"/>
         <DCCReference Include="..\..\source\MH.pas"/>
@@ -534,7 +533,6 @@
         <DCCReference Include="..\..\source\zDrawEngineSoftH264.pas"/>
         <DCCReference Include="..\..\source\zDrawEngineSoftY4M.pas"/>
         <DCCReference Include="..\..\source\zExpression.pas"/>
-        <DCCReference Include="..\..\source\zSound.pas"/>
         <DCCReference Include="..\..\source\MovementEngine.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
