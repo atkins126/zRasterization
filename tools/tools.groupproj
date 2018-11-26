@@ -9,6 +9,12 @@
         <Projects Include="MemoryBitmap conver\BitmapConver.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="FilePackageWithZDB\FilePackageWithZDB.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="ConvFile2RESCode\ConvFile2Pascal.dproj">
+            <Dependencies/>
+        </Projects>
         <Projects Include="StringTranslate\StringTranslate.dproj">
             <Dependencies/>
         </Projects>
@@ -44,6 +50,24 @@
     <Target Name="BitmapConver:Make">
         <MSBuild Projects="MemoryBitmap conver\BitmapConver.dproj" Targets="Make"/>
     </Target>
+    <Target Name="FilePackageWithZDB">
+        <MSBuild Projects="FilePackageWithZDB\FilePackageWithZDB.dproj"/>
+    </Target>
+    <Target Name="FilePackageWithZDB:Clean">
+        <MSBuild Projects="FilePackageWithZDB\FilePackageWithZDB.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="FilePackageWithZDB:Make">
+        <MSBuild Projects="FilePackageWithZDB\FilePackageWithZDB.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="ConvFile2Pascal">
+        <MSBuild Projects="ConvFile2RESCode\ConvFile2Pascal.dproj"/>
+    </Target>
+    <Target Name="ConvFile2Pascal:Clean">
+        <MSBuild Projects="ConvFile2RESCode\ConvFile2Pascal.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="ConvFile2Pascal:Make">
+        <MSBuild Projects="ConvFile2RESCode\ConvFile2Pascal.dproj" Targets="Make"/>
+    </Target>
     <Target Name="StringTranslate">
         <MSBuild Projects="StringTranslate\StringTranslate.dproj"/>
     </Target>
@@ -72,13 +96,13 @@
         <MSBuild Projects="PascalCodeUnification\PascalCodeUnification.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="ImgFmtConver2PNG;BitmapConver;StringTranslate;FontBuild;PascalCodeUnification"/>
+        <CallTarget Targets="ImgFmtConver2PNG;BitmapConver;FilePackageWithZDB;ConvFile2Pascal;StringTranslate;FontBuild;PascalCodeUnification"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="ImgFmtConver2PNG:Clean;BitmapConver:Clean;StringTranslate:Clean;FontBuild:Clean;PascalCodeUnification:Clean"/>
+        <CallTarget Targets="ImgFmtConver2PNG:Clean;BitmapConver:Clean;FilePackageWithZDB:Clean;ConvFile2Pascal:Clean;StringTranslate:Clean;FontBuild:Clean;PascalCodeUnification:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="ImgFmtConver2PNG:Make;BitmapConver:Make;StringTranslate:Make;FontBuild:Make;PascalCodeUnification:Make"/>
+        <CallTarget Targets="ImgFmtConver2PNG:Make;BitmapConver:Make;FilePackageWithZDB:Make;ConvFile2Pascal:Make;StringTranslate:Make;FontBuild:Make;PascalCodeUnification:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
