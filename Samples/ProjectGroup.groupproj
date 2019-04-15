@@ -1,0 +1,72 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{737ABDF0-B492-45C6-BAF0-68AEF8EE3810}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="CompileTest\CodeCompileTest.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="FFMPEGVideoReader\FFMPEG_ReaderDemo.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Projection\memoryRasterProjection.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="RasterizationFormat\RasterizationFormatDemo.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="CodeCompileTest">
+        <MSBuild Projects="CompileTest\CodeCompileTest.dproj"/>
+    </Target>
+    <Target Name="CodeCompileTest:Clean">
+        <MSBuild Projects="CompileTest\CodeCompileTest.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="CodeCompileTest:Make">
+        <MSBuild Projects="CompileTest\CodeCompileTest.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="FFMPEG_ReaderDemo">
+        <MSBuild Projects="FFMPEGVideoReader\FFMPEG_ReaderDemo.dproj"/>
+    </Target>
+    <Target Name="FFMPEG_ReaderDemo:Clean">
+        <MSBuild Projects="FFMPEGVideoReader\FFMPEG_ReaderDemo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="FFMPEG_ReaderDemo:Make">
+        <MSBuild Projects="FFMPEGVideoReader\FFMPEG_ReaderDemo.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="memoryRasterProjection">
+        <MSBuild Projects="Projection\memoryRasterProjection.dproj"/>
+    </Target>
+    <Target Name="memoryRasterProjection:Clean">
+        <MSBuild Projects="Projection\memoryRasterProjection.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="memoryRasterProjection:Make">
+        <MSBuild Projects="Projection\memoryRasterProjection.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="RasterizationFormatDemo">
+        <MSBuild Projects="RasterizationFormat\RasterizationFormatDemo.dproj"/>
+    </Target>
+    <Target Name="RasterizationFormatDemo:Clean">
+        <MSBuild Projects="RasterizationFormat\RasterizationFormatDemo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="RasterizationFormatDemo:Make">
+        <MSBuild Projects="RasterizationFormat\RasterizationFormatDemo.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="CodeCompileTest;FFMPEG_ReaderDemo;memoryRasterProjection;RasterizationFormatDemo"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="CodeCompileTest:Clean;FFMPEG_ReaderDemo:Clean;memoryRasterProjection:Clean;RasterizationFormatDemo:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="CodeCompileTest:Make;FFMPEG_ReaderDemo:Make;memoryRasterProjection:Make;RasterizationFormatDemo:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
