@@ -546,7 +546,6 @@
         <DCCReference Include="..\..\source\JLSLossy.pas"/>
         <DCCReference Include="..\..\source\JLSMelcode.pas"/>
         <DCCReference Include="..\..\source\LibraryManager.pas"/>
-        <DCCReference Include="..\..\source\LinerAction.pas"/>
         <DCCReference Include="..\..\source\ListEngine.pas"/>
         <DCCReference Include="..\..\source\MediaCenter.pas"/>
         <DCCReference Include="..\..\source\MemoryRaster.pas"/>

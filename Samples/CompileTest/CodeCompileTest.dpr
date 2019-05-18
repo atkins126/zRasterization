@@ -187,7 +187,6 @@ uses
   JLSLossy in '..\..\source\JLSLossy.pas',
   JLSMelcode in '..\..\source\JLSMelcode.pas',
   LibraryManager in '..\..\source\LibraryManager.pas',
-  LinerAction in '..\..\source\LinerAction.pas',
   ListEngine in '..\..\source\ListEngine.pas',
   MediaCenter in '..\..\source\MediaCenter.pas',
   MemoryRaster in '..\..\source\MemoryRaster.pas',

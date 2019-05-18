@@ -375,6 +375,7 @@ function Quadrant(const Angle: TGeoFloat): Integer; {$IFDEF INLINE_ASM} inline; 
 procedure ProjectPoint(const Srcx, Srcy, Dstx, Dsty, Dist: TGeoFloat; out Nx, Ny: TGeoFloat); {$IFDEF INLINE_ASM} inline; {$ENDIF} overload;
 procedure ProjectPoint(const Srcx, Srcy, Srcz, Dstx, Dsty, Dstz, Dist: TGeoFloat; out Nx, Ny, Nz: TGeoFloat); {$IFDEF INLINE_ASM} inline; {$ENDIF} overload;
 procedure ProjectPoint(const Px, Py, Angle, Distance: TGeoFloat; out Nx, Ny: TGeoFloat); {$IFDEF INLINE_ASM} inline; {$ENDIF} overload;
+
 procedure ProjectPoint0(const Px, Py, Distance: TGeoFloat; out Nx, Ny: TGeoFloat); {$IFDEF INLINE_ASM} inline; {$ENDIF} overload;
 procedure ProjectPoint45(const Px, Py, Distance: TGeoFloat; out Nx, Ny: TGeoFloat); {$IFDEF INLINE_ASM} inline; {$ENDIF} overload;
 procedure ProjectPoint90(const Px, Py, Distance: TGeoFloat; out Nx, Ny: TGeoFloat); {$IFDEF INLINE_ASM} inline; {$ENDIF} overload;
@@ -383,6 +384,7 @@ procedure ProjectPoint180(const Px, Py, Distance: TGeoFloat; out Nx, Ny: TGeoFlo
 procedure ProjectPoint225(const Px, Py, Distance: TGeoFloat; out Nx, Ny: TGeoFloat); {$IFDEF INLINE_ASM} inline; {$ENDIF} overload;
 procedure ProjectPoint270(const Px, Py, Distance: TGeoFloat; out Nx, Ny: TGeoFloat); {$IFDEF INLINE_ASM} inline; {$ENDIF} overload;
 procedure ProjectPoint315(const Px, Py, Distance: TGeoFloat; out Nx, Ny: TGeoFloat); {$IFDEF INLINE_ASM} inline; {$ENDIF} overload;
+
 function ProjectPoint0(const Point: TVec2; const Distance: TGeoFloat): TVec2; {$IFDEF INLINE_ASM} inline; {$ENDIF} overload;
 function ProjectPoint45(const Point: TVec2; const Distance: TGeoFloat): TVec2; {$IFDEF INLINE_ASM} inline; {$ENDIF} overload;
 function ProjectPoint90(const Point: TVec2; const Distance: TGeoFloat): TVec2; {$IFDEF INLINE_ASM} inline; {$ENDIF} overload;

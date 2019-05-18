@@ -15,6 +15,9 @@
         <Projects Include="RasterizationFormat\RasterizationFormatDemo.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="BWHideGraphic\BWHideTech.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -59,14 +62,23 @@
     <Target Name="RasterizationFormatDemo:Make">
         <MSBuild Projects="RasterizationFormat\RasterizationFormatDemo.dproj" Targets="Make"/>
     </Target>
+    <Target Name="BWHideTech">
+        <MSBuild Projects="BWHideGraphic\BWHideTech.dproj"/>
+    </Target>
+    <Target Name="BWHideTech:Clean">
+        <MSBuild Projects="BWHideGraphic\BWHideTech.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="BWHideTech:Make">
+        <MSBuild Projects="BWHideGraphic\BWHideTech.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="CodeCompileTest;FFMPEG_ReaderDemo;memoryRasterProjection;RasterizationFormatDemo"/>
+        <CallTarget Targets="CodeCompileTest;FFMPEG_ReaderDemo;memoryRasterProjection;RasterizationFormatDemo;BWHideTech"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="CodeCompileTest:Clean;FFMPEG_ReaderDemo:Clean;memoryRasterProjection:Clean;RasterizationFormatDemo:Clean"/>
+        <CallTarget Targets="CodeCompileTest:Clean;FFMPEG_ReaderDemo:Clean;memoryRasterProjection:Clean;RasterizationFormatDemo:Clean;BWHideTech:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="CodeCompileTest:Make;FFMPEG_ReaderDemo:Make;memoryRasterProjection:Make;RasterizationFormatDemo:Make"/>
+        <CallTarget Targets="CodeCompileTest:Make;FFMPEG_ReaderDemo:Make;memoryRasterProjection:Make;RasterizationFormatDemo:Make;BWHideTech:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

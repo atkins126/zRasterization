@@ -313,9 +313,11 @@ type
     procedure DrawText(Text: SystemString; x, y: Integer; siz: TGeoFloat; TextColor: TRasterColor); overload;
 
     { Projection:hardware pipe simulate }
-    procedure ProjectionTo(Dst: TMemoryRaster; const sourRect, DestRect: TV2Rect4; const bilinear_sampling: Boolean; const alpha: TGeoFloat);
+    procedure ProjectionTo(Dst: TMemoryRaster; const sourRect, DestRect: TV2Rect4; const bilinear_sampling: Boolean; const alpha: TGeoFloat); overload;
+    procedure ProjectionTo(Dst: TMemoryRaster; const sourRect, DestRect: TRectV2; const bilinear_sampling: Boolean; const alpha: TGeoFloat); overload;
     procedure Projection(const DestRect: TV2Rect4; const COLOR: TRasterColor); overload;
     procedure Projection(sour: TMemoryRaster; const sourRect, DestRect: TV2Rect4; const bilinear_sampling: Boolean; const alpha: TGeoFloat); overload;
+    procedure Projection(sour: TMemoryRaster; const sourRect, DestRect: TRectV2; const bilinear_sampling: Boolean; const alpha: TGeoFloat); overload;
 
     { blend draw }
     procedure Draw(Src: TMemoryRaster); overload;
@@ -700,6 +702,7 @@ type
     function Write(r: TMemoryRaster): Int64;
     function Read(r: TMemoryRaster): Int64;
     procedure Remove(r: TMemoryRaster);
+    procedure Clear;
 
     property AutoFreeStream: Boolean read FAutoFreeStream write FAutoFreeStream;
     property stream: TCoreClassStream read FStream;
@@ -714,6 +717,10 @@ type
 
 
 procedure Wait_SystemFont_Init;
+
+function ClampInt_(const Value, Min, Max: Integer): Integer;
+function ClampByte3_(const Value, Min, Max: Byte): Byte;
+function ClampByte_(const Value: Integer): Byte;
 
 procedure FillRasterColor(var x; Count: Cardinal; Value: TRasterColor);
 procedure CopyRasterColor(const Source; var dest; Count: Cardinal);
@@ -765,7 +772,8 @@ procedure GrayscaleBlur(Source: TMemoryRaster; radius: Double; const Bounds: TRe
 
 procedure Antialias32(const DestMR: TMemoryRaster; AXOrigin, AYOrigin, AXFinal, AYFinal: Integer); overload;
 procedure Antialias32(const DestMR: TMemoryRaster; const AAmount: Integer); overload;
-procedure HistogramEqualize(const mr: TMemoryRaster);
+procedure HistogramEqualize(const mr: TMemoryRaster); overload;
+procedure HistogramEqualize(const mr1, mr2: TMemoryRaster); overload;
 procedure RemoveRedEyes(const mr: TMemoryRaster);
 procedure Sepia32(const mr: TMemoryRaster; const Depth: Byte);
 procedure Sharpen(const DestMR: TMemoryRaster; const SharpenMore: Boolean);
@@ -918,9 +926,6 @@ const
 
 {$ENDREGION 'InternalDefines'}
 
-function ClampInt_(const Value, Min, Max: Integer): Integer; forward;
-function ClampByte3_(const Value, Min, Max: Byte): Byte; forward;
-function ClampByte_(const Value: Integer): Byte; forward;
 function IntersectRect_(out Dst: TRect; const r1, r2: TRect): Boolean; forward;
 procedure OffsetRect_(var r: TRect; dx, dy: Integer); forward;
 function IsRectEmpty_(const r: TRect): Boolean; forward;
@@ -945,6 +950,7 @@ end;
 
 destructor TRasterSerialized.Destroy;
 begin
+  Clear();
   if FAutoFreeStream then
       DisposeObject(FStream);
   DisposeObject(FCritical);
@@ -985,7 +991,7 @@ begin
         begin
           r.CloseVertex;
           r.FreeAgg;
-          FreeMem(r.FBits);
+          System.FreeMemory(r.FBits);
           r.FBits := nil;
           r.FMemorySerializedPosition := p;
           Result := h1.siz;
@@ -1026,9 +1032,9 @@ begin
           if FStream.position + h.siz <= FStream.Size then
             begin
               if Assigned(r.FBits) and r.FFreeBits then
-                  FreeMem(r.FBits);
+                  System.FreeMemory(r.FBits);
 
-              GetMem(r.FBits, h.siz);
+              r.FBits := System.GetMemory(h.siz);
               r.FWidth := h.Width;
               r.FHeight := h.Height;
 
@@ -1082,6 +1088,15 @@ begin
   finally
       FCritical.Release;
   end;
+end;
+
+procedure TRasterSerialized.Clear;
+begin
+  while FReadList.Count > 0 do
+      Remove(FReadList[0]);
+  while FWriteList.Count > 0 do
+      Remove(FWriteList[0]);
+  FStream.Size := 0;
 end;
 
 function NewRaster_: TMemoryRaster;

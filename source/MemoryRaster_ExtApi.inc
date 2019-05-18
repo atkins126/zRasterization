@@ -66,12 +66,15 @@ end;
 
 procedure FillRasterColor(var x; Count: Cardinal; Value: TRasterColor);
 var
-  i: Integer;
-  p: PRasterColorArray;
+  p: PRasterColor;
 begin
-  p := PRasterColorArray(@x);
-  for i := Count - 1 downto 0 do
-      p^[i] := Value;
+  p := PRasterColor(@x);
+  while Count > 0 do
+    begin
+      p^ := Value;
+      inc(p);
+      dec(Count);
+    end;
 end;
 
 procedure CopyRasterColor(const Source; var dest; Count: Cardinal);
@@ -1093,6 +1096,110 @@ begin
 
       p^ := (p^ and $FF000000) or (r shl 16) or (g shl 8) or b;
 
+      inc(p);
+    end;
+end;
+
+procedure HistogramEqualize(const mr1, mr2: TMemoryRaster);
+var
+  LHistogram1: array [0 .. 255] of Cardinal;
+  LHistogram2: array [0 .. 255] of Cardinal;
+  LMap1: array [0 .. 255] of Byte;
+  LMap2: array [0 .. 255] of Byte;
+  i: Integer;
+  LPixelCount: Integer;
+  r, g, b: Byte;
+  LSum1, LSum2: Cardinal;
+  p: PRasterColor;
+begin
+  if (not Assigned(mr1)) or
+    (mr1.width <= 0) or
+    (mr1.height <= 0) then
+    begin
+      Exit;
+    end;
+
+  // calculating histogram
+  for i := 0 to 255 do
+    begin
+      LHistogram1[i] := 0;
+      LHistogram1[i] := 0;
+      LHistogram1[i] := 0;
+
+      LHistogram2[i] := 0;
+      LHistogram2[i] := 0;
+      LHistogram2[i] := 0;
+    end;
+
+  mr1.ReadyBits();
+  p := @mr1.FBits^[0];
+  LPixelCount := mr1.width * mr1.height;
+
+  for i := 1 to LPixelCount do
+    begin
+      r := p^ shr 16 and $FF;
+      g := p^ shr 8 and $FF;
+      b := p^ and $FF;
+      LHistogram1[r] := LHistogram1[r] + 1;
+      LHistogram1[g] := LHistogram1[g] + 1;
+      LHistogram1[b] := LHistogram1[b] + 1;
+      inc(p);
+    end;
+
+  mr2.ReadyBits();
+  p := @mr2.FBits^[0];
+  LPixelCount := mr2.width * mr2.height;
+
+  for i := 1 to LPixelCount do
+    begin
+      r := p^ shr 16 and $FF;
+      g := p^ shr 8 and $FF;
+      b := p^ and $FF;
+      LHistogram2[r] := LHistogram2[r] + 1;
+      LHistogram2[g] := LHistogram2[g] + 1;
+      LHistogram2[b] := LHistogram2[b] + 1;
+      inc(p);
+    end;
+
+  // calculating the map
+  LSum1 := 0;
+  LSum2 := 0;
+  for i := 0 to 255 do
+    begin
+      LSum1 := LSum1 + LHistogram1[i];
+      LMap1[i] := Round(LSum1 / (mr1.width * mr1.height * 3) * 255);
+      LSum2 := LSum2 + LHistogram1[i];
+      LMap2[i] := Round(LSum2 / (mr2.width * mr2.height * 3) * 255);
+    end;
+
+  // doing map
+  mr1.ReadyBits();
+  p := @mr1.FBits^[0];
+  LPixelCount := mr1.width * mr1.height;
+  for i := 1 to LPixelCount do
+    begin
+      r := p^ shr 16 and $FF;
+      g := p^ shr 8 and $FF;
+      b := p^ and $FF;
+      r := umlMin(LMap1[r], LMap2[r]);
+      g := umlMin(LMap1[g], LMap2[g]);
+      b := umlMin(LMap1[b], LMap2[b]);
+      p^ := (p^ and $FF000000) or (r shl 16) or (g shl 8) or b;
+      inc(p);
+    end;
+
+  mr2.ReadyBits();
+  p := @mr2.FBits^[0];
+  LPixelCount := mr2.width * mr2.height;
+  for i := 1 to LPixelCount do
+    begin
+      r := p^ shr 16 and $FF;
+      g := p^ shr 8 and $FF;
+      b := p^ and $FF;
+      r := umlMin(LMap1[r], LMap2[r]);
+      g := umlMin(LMap1[g], LMap2[g]);
+      b := umlMin(LMap1[b], LMap2[b]);
+      p^ := (p^ and $FF000000) or (r shl 16) or (g shl 8) or b;
       inc(p);
     end;
 end;
