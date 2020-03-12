@@ -34,20 +34,18 @@ type
   // When loading half, quarter or 1/8 size, this performance setting is not used.
   TJpegPerformance = (jpBestQuality, jpBestSpeed);
 
-  // TMemoryJpegRaster is a Delphi and fpc class, which can be used
-  // to load Jpeg files into TMemoryRaster. It relays the Jpeg functionality in the non-Windows
-  // TJpegImage class to this TMemoryRaster component.
+  // TMemoryJpegRaster is a Delphi and fpc class, which can be used to load Jpeg files into TMemoryRaster.
+  // It relays the Jpeg functionality in the non-Windows TJpegImage class to this TMemoryRaster
   TMemoryJpegRaster = class(TCoreClassObject)
   private
-    // the temporary TMemoryRaster that can be either the full image or the
-    // tilesized bitmap when UseTiledDrawing is activated.
+    // the temporary TMemoryRaster that can be either the full image or the tilesized bitmap when UseTiledDrawing is activated.
     FRaster: TMemoryRaster;
     FImage: TJpegImage;
     FUseTiledDrawing: boolean;
     FQuiet: boolean;
-    function ImageCreateMap(var AIterator: TMapIterator): TObject;
+    function ImageCreateMap(var Iterator_: TMapIterator): TObject;
     procedure ImageUpdate(Sender: TObject);
-    procedure ImageDebug(Sender: TObject; WarnStyle: TWarnStyle; const AMessage: RawByteString);
+    procedure ImageDebug(Sender: TObject; WarnStyle: TWarnStyle; const Message_: TPascalString);
     function GetPerformance: TJpegPerformance;
     procedure SetPerformance(const Value: TJpegPerformance);
     function GetGrayScale: boolean;
@@ -59,8 +57,7 @@ type
     procedure SetScale(const Value: TJpegScale);
   protected
     // Assign this TJpegGraphic to Dest. The only valid type for Dest is TMemoryRaster.
-    // The internal jpeg image will be loaded from the data stream at the correct
-    // scale, then assigned to the bitmap in Dest.
+    // The internal jpeg image will be loaded from the data stream at the correct scale, then assigned to the bitmap in Dest.
     function GetEmpty: boolean;
     function GetHeight: Integer;
     function GetWidth: Integer;
@@ -72,50 +69,44 @@ type
 
     // Use Assign to assign a TMemoryRaster or other TJpegGraphic to this graphic. If
     // Source is a TMemoryRaster, the TMemoryRaster is compressed to the internal jpeg image.
-    // If Source is another TJpegGraphic,
-    // the data streams are copied and the internal Jpeg image is loaded from the
-    // data. It is also possible to assign a TJpegGraphic to a TMemoryRaster, like this:
-    // <code>
-    // MyBitmap.Assign(MyJpegGraphic)
-    // </code>
+    // If Source is another TJpegGraphic, the data streams are copied and the internal Jpeg image is loaded from the data.
+    // It is also possible to assign a TJpegGraphic to a TMemoryRaster, like this: MyBitmap.Assign(MyJpegGraphic)
     // In that case, the protected AssignTo method is called.
     procedure Assign(Source: TMemoryJpegRaster);
     procedure SetRaster(Source: PRGBArray; Source_width, Source_height: Integer); overload;
     procedure SetRaster(Source: TMemoryRaster); overload;
     procedure GetRaster(Dest: TMemoryRaster);
 
-    // Load a Jpeg graphic from the stream in Stream. Stream can be any stream
-    // type, as long as the size of the stream is known in advance. The stream
-    // should only contain *one* Jpeg graphic.
+    // Load a Jpeg graphic from the stream in Stream. Stream can be any stream type,
+    // as long as the size of the stream is known in advance. The stream should only contain *one* Jpeg graphic.
     procedure LoadFromStream(Stream: TMemoryStream64);
-    procedure LoadFromFile(const AFileName: string);
+    procedure LoadFromFile(const FileName_: string);
 
     // In case of LoadOption [loTileMode] is included, after the LoadFromStream,
-    // individual tile blocks can be loaded which will be put in the resulting
-    // bitmap. The tile loaded will contain all the MCU blocks that fall within
-    // the specified bounds ALeft/ATop/ARight/ABottom. Note that these are var
-    // parameters, after calling this procedure they will be updated to the MCU
-    // block borders. ALeft/ATop can subsequently be used to draw the resulting
-    // TJpegFormat.Bitmap to a canvas.
-    procedure LoadTileBlock(var ALeft, ATop, ARight, ABottom: Integer);
+    // individual tile blocks can be loaded which will be put in the resulting bitmap.
+    // The tile loaded will contain all the MCU blocks that fall within the specified bounds Left_/Top_/Right_/Bottom_.
+    // Note that these are var parameters, after calling this procedure they will be updated to the MCU block borders.
+    // Left_/Top_ can subsequently be used to draw the resulting TJpegFormat.Bitmap to a canvas.
+    procedure LoadTileBlock(var Left_, Top_, Right_, Bottom_: Integer);
 
-    // Save a Jpeg graphic to the stream in Stream. Stream can be any stream
-    // type, as long as the size of the stream is known in advance.
-    procedure SaveToStream(Stream: TMemoryStream64); // override;
-    procedure SaveToFile(const AFileName: string);
+    // Save a Jpeg graphic to the stream in Stream. Stream can be any stream type
+    // as long as the size of the stream is known in advance.
+    procedure SaveToStream(Stream: TMemoryStream64);
+    procedure SaveToFile(const FileName_: string);
     property Performance: TJpegPerformance read GetPerformance write SetPerformance;
-    // Downsizing scale when loading. When downsizing, the Jpeg compressor
-    // uses less memory and processing power to decode the DCT coefficients.
-    // jsFull is the 100% scale. jsDiv2 is 50% scale, jsDiv4 is 25% scale and jsDiv8
-    // is 12.5% scale (aka 1/8).
+
+    // Downsizing scale when loading. When downsizing,
+    // the Jpeg compressor uses less memory and processing power to decode the DCT coefficients.
+    // jsFull is the 100% scale. jsDiv2 is 50% scale, jsDiv4 is 25% scale and jsDiv8 is 12.5% scale (aka 1/8).
     property Scale: TJpegScale read GetScale write SetScale;
     property GrayScale: boolean read GetGrayScale write SetGrayScale;
     property CompressionQuality: TJpegQuality read GetCompressionQuality write SetCompressionQuality;
-    // When UseTiledDrawing is activated, the Jpeg graphic gets drawn by separate
-    // small tiled bitmaps when using TJpegGraphic.Draw. Only baseline jpeg images can
-    // use tiled drawing, so activating this setting takes no effect in other
-    // compression methods. The default tile size is 256x256 pixels.
+
+    // When UseTiledDrawing is activated, the Jpeg graphic gets drawn by separate small tiled bitmaps when using TJpegGraphic.Draw
+    // Only baseline jpeg images can use tiled drawing, so activating this setting takes no effect in other compression methods.
+    // The default tile size is 256x256 pixels.
     property UseTiledDrawing: boolean read FUseTiledDrawing write SetUseTiledDrawing;
+
     // disable debug info
     property Quiet: boolean read FQuiet write FQuiet;
     // Version returns the current version of the NativeJpeg library.
@@ -131,62 +122,62 @@ type
 
 implementation
 
-function SetBitmap32FromIterator(const AIterator: TMapIterator): TMemoryRaster;
+function SetBitmap32FromIterator(const Iterator_: TMapIterator): TMemoryRaster;
 begin
   Result := NewRaster();
-  Result.SetSize(AIterator.Width, AIterator.Height);
+  Result.SetSize(Iterator_.Width, Iterator_.Height);
 end;
 
-procedure GetBitmap32Iterator(Raster_: TMemoryRaster; AIterator: TMapIterator); overload;
+procedure GetBitmap32Iterator(Raster_: TMemoryRaster; Iterator_: TMapIterator); overload;
 begin
-  AIterator.Width := Raster_.Width;
-  AIterator.Height := Raster_.Height;
+  Iterator_.Width := Raster_.Width;
+  Iterator_.Height := Raster_.Height;
   if Raster_.Width * Raster_.Height = 0 then
       exit;
-  AIterator.Map := PByte(Raster_.ScanLine[0]);
-  if AIterator.Height > 1 then
-      AIterator.ScanStride := NativeUInt(Raster_.ScanLine[1]) - NativeUInt(Raster_.ScanLine[0])
+  Iterator_.Map := PByte(Raster_.ScanLine[0]);
+  if Iterator_.Height > 1 then
+      Iterator_.ScanStride := NativeUInt(Raster_.ScanLine[1]) - NativeUInt(Raster_.ScanLine[0])
   else
-      AIterator.ScanStride := 0;
+      Iterator_.ScanStride := 0;
 
-  AIterator.CellStride := 4;
-  AIterator.BitCount := 32;
+  Iterator_.CellStride := 4;
+  Iterator_.BitCount := 32;
 end;
 
-procedure GetBitmap32Iterator(Raster_: PRGBArray; Width, Height: Integer; AIterator: TMapIterator); overload;
+procedure GetBitmap32Iterator(Raster_: PRGBArray; Width, Height: Integer; Iterator_: TMapIterator); overload;
 begin
-  AIterator.Width := Width;
-  AIterator.Height := Height;
+  Iterator_.Width := Width;
+  Iterator_.Height := Height;
   if Height * Height = 0 then
       exit;
-  AIterator.Map := PByte(Raster_);
-  if AIterator.Height > 1 then
-      AIterator.ScanStride := Width * 3
+  Iterator_.Map := PByte(Raster_);
+  if Iterator_.Height > 1 then
+      Iterator_.ScanStride := Width * 3
   else
-      AIterator.ScanStride := 0;
+      Iterator_.ScanStride := 0;
 
-  AIterator.CellStride := 3;
-  AIterator.BitCount := 24;
+  Iterator_.CellStride := 3;
+  Iterator_.BitCount := 24;
 end;
 
-function TMemoryJpegRaster.ImageCreateMap(var AIterator: TMapIterator): TObject;
+function TMemoryJpegRaster.ImageCreateMap(var Iterator_: TMapIterator): TObject;
 begin
-  ImageDebug(Self, wsInfo, PFormat('create TMemoryRaster x=%d y=%d', [AIterator.Width, AIterator.Height]));
+  ImageDebug(Self, wsInfo, PFormat('create TMemoryRaster x=%d y=%d', [Iterator_.Width, Iterator_.Height]));
 
   // create a bitmap with iterator size and pixelformat
-  if (not Assigned(FRaster)) or (FRaster.Width <> AIterator.Width) or (FRaster.Height <> AIterator.Height) then
+  if (FRaster = nil) or (FRaster.Empty) or (FRaster.Width <> Iterator_.Width) or (FRaster.Height <> Iterator_.Height) then
     begin
       // create a new bitmap with iterator size and pixelformat
       DisposeObject(FRaster);
       FRaster := nil;
-      FRaster := SetBitmap32FromIterator(AIterator);
+      FRaster := SetBitmap32FromIterator(Iterator_);
       FRaster.Clear(RColor(0, 0, 0, $FF));
     end;
 
   // also update the iterator with bitmap properties
-  GetBitmap32Iterator(FRaster, AIterator);
+  GetBitmap32Iterator(FRaster, Iterator_);
 
-  ImageDebug(Self, wsInfo, PFormat('AIterator bitmap scanstride=%d', [AIterator.ScanStride]));
+  ImageDebug(Self, wsInfo, PFormat('Iterator_ bitmap scanstride=%d', [Iterator_.ScanStride]));
 
   Result := FRaster;
 end;
@@ -199,11 +190,11 @@ begin
   FRaster := nil;
 end;
 
-procedure TMemoryJpegRaster.ImageDebug(Sender: TObject; WarnStyle: TWarnStyle; const AMessage: RawByteString);
+procedure TMemoryJpegRaster.ImageDebug(Sender: TObject; WarnStyle: TWarnStyle; const Message_: TPascalString);
 begin
   if FQuiet then
       exit;
-  DoStatus('%s [%s] - %s', [cWarnStyleNames[WarnStyle], Sender.ClassName, AMessage]);
+  DoStatus('%s [%s] - %s', [cWarnStyleNames[WarnStyle], Sender.ClassName, Message_.Text]);
 end;
 
 function TMemoryJpegRaster.GetPerformance: TJpegPerformance;
@@ -296,7 +287,7 @@ begin
   FImage.OnUpdate := {$IFDEF FPC}@{$ENDIF FPC}ImageUpdate;
   FImage.OnDebugOut := {$IFDEF FPC}@{$ENDIF FPC}ImageDebug;
   FImage.OnCreateMap := {$IFDEF FPC}@{$ENDIF FPC}ImageCreateMap;
-  FImage.DCTCodingMethod := dmAccurate;
+  FImage.DCTCodingMethod := dmFast;
   FUseTiledDrawing := False;
   FQuiet := True;
 end;
@@ -386,7 +377,9 @@ procedure TMemoryJpegRaster.GetRaster(Dest: TMemoryRaster);
 begin
   // the LoadLJpeg method will create the FRaster thru ImageCreateMap
   Image.LoadJpeg(Scale, True);
-  Dest.Assign(FRaster);
+  Dest.SetWorkMemory(True, FRaster);
+  DisposeObject(FRaster);
+  FRaster := nil;
 end;
 
 procedure TMemoryJpegRaster.LoadFromStream(Stream: TMemoryStream64);
@@ -394,15 +387,15 @@ begin
   FImage.LoadFromStream(Stream);
 end;
 
-procedure TMemoryJpegRaster.LoadFromFile(const AFileName: string);
+procedure TMemoryJpegRaster.LoadFromFile(const FileName_: string);
 begin
-  FImage.LoadFromFile(AFileName);
+  FImage.LoadFromFile(FileName_);
 end;
 
-procedure TMemoryJpegRaster.LoadTileBlock(var ALeft, ATop, ARight, ABottom: Integer);
+procedure TMemoryJpegRaster.LoadTileBlock(var Left_, Top_, Right_, Bottom_: Integer);
 begin
   // relay to FImage
-  FImage.LoadTileBlock(ALeft, ATop, ARight, ABottom);
+  FImage.LoadTileBlock(Left_, Top_, Right_, Bottom_);
 end;
 
 procedure TMemoryJpegRaster.SaveToStream(Stream: TMemoryStream64);
@@ -410,9 +403,9 @@ begin
   FImage.SaveToStream(Stream);
 end;
 
-procedure TMemoryJpegRaster.SaveToFile(const AFileName: string);
+procedure TMemoryJpegRaster.SaveToFile(const FileName_: string);
 begin
-  FImage.SaveToFile(AFileName);
+  FImage.SaveToFile(FileName_);
 end;
 
 end.
